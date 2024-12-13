@@ -15,27 +15,23 @@
   }
 
   function onRightClickEvenet() {
-    if (changable) {
       rightClicked = true;
       if (displayableImage != "flag") displayableImage = "flag";
       else displayableImage = "hidden";
       changable = !changable;
-    }
   }
 
   onMount(() => {
-    // document.createElement(...);
     document.addEventListener(
       "contextmenu",
       (e) => e?.cancelable && e.preventDefault()
     );
   });
 </script>
-
-<!-- svelte-ignore a11y_consider_explicit_label -->
-<!-- svelte-ignore event_directive_deprecated -->
+   <!-- svelte-ignore a11y_consider_explicit_label -->
+   <!-- svelte-ignore event_directive_deprecated -->
    <button
-   id="{props.niggo}"
+   id="{props.position}"
    style="background-image: url(src/images/{displayableImage}.png);"
    class="{props.isbomb == true ? "bomb": "tile"}"
    class:active={clicked == true}
@@ -51,7 +47,12 @@
     background-size: contain;
   }
 
+  .active{
+    background-image: url(src/images/1.png) !important;
+
+  }
+
   .bomb {
-    background-image: url(src/images/8.png) !important;
+    background-image: url(src/images/mine.webp) !important;
   }
 </style>
