@@ -14,29 +14,28 @@
   let aight = true;
   for (let x = 1; x < mapSize + 1; x++) {
     for (let y = 1; y < mapSize + 1; y++) {
-      bombList.forEach((element) => {
-        if (element.position.x == x && element.position.y == y) {
-          tilesList.push(new Tile(true, 1, { x, y }));
-          !aight;
-        }
-      });
-      if (aight) tilesList.push(new Tile(false, 1, { x, y }));
+      tilesList.push(new Tile(false, 1, { x, y }));
     }
   }
   let db = 0;
-  tilesList.forEach((element) => {
-    if (element.isBomb) {
-      console.log(tilesList[tilesList.indexOf(element)].position);
-    }
-    if (element.isBomb) {
-      db++;
-    }
+  // tilesList.forEach((element) => {
+  //   if (element.isBomb) {
+  //     console.log(tilesList[tilesList.indexOf(element)].position);
+  //   }
+  //   if (element.isBomb) {
+  //     db++;
+  //   }
+  // });
+  bombList.forEach(element => {
+    let bombSpot = tilesList.find((x) => x.position.x == element.position.x && x.position.y == element.position.y)?.position;
+    let x = element.position.x;
+    let y = element.position.y;
+    tilesList.splice(tilesList.indexOf(tilesList.find((y) => y.position.x == bombSpot?.x && y.position.y == bombSpot?.y)), 1, new Tile(true, 1, {x, y}));
+    
   });
-  console.log(db);
-  // console.log(tilesList);
 </script>
 
-<div class="holder" style="width: 35%; margin:auto">
+<div class="holder">
   {#each tilesList as i}
     <Tiles
       position="{i.position.x};{i.position.y}"
@@ -44,3 +43,16 @@
     />
   {/each}
 </div>
+
+<style>
+  .holder {
+    overflow: hidden;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    background-color: #14121c;
+    border-radius: 5px; /* Ezt döntsétek el hogy kell-e */
+  }
+</style>

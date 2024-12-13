@@ -51,7 +51,6 @@
     background-image: url(src/images/1.png) !important;
 
   }
-
   .bomb {
     background-image: url(src/images/mine.webp) !important;
   }
