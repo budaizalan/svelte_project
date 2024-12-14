@@ -5,16 +5,15 @@
   let rightClicked = $state(false);
   let displayableImage = $state("hidden");
   let changable = true;
-
-  // @ts-ignore
+  let geci = props.bombaround;
   function onClickEvent() {
     if (changable) {
       clicked = true;
-      displayableImage = props.adjective;
+      displayableImage = props.bombaround
     }
   }
 
-  function onRightClickEvenet() {
+  function onRightClickEvent() {
       rightClicked = true;
       if (displayableImage != "flag") displayableImage = "flag";
       else displayableImage = "hidden";
@@ -31,12 +30,12 @@
    <!-- svelte-ignore a11y_consider_explicit_label -->
    <!-- svelte-ignore event_directive_deprecated -->
    <button
-   id="{props.position}"
-   style="background-image: url(src/images/{displayableImage}.png);"
-   class="{props.isbomb == true ? "bomb": "tile"}"
+   id="{props.position}, {geci}"
+   style="background-image: url(src/images/{geci}.png);"
+   class="{props.isbomb}"
    class:active={clicked == true}
    on:click={() => onClickEvent()}
-   on:contextmenu={() => onRightClickEvenet()}
+   on:contextmenu={() => onRightClickEvent()}
    ></button>
 
 <style>
@@ -48,7 +47,7 @@
   }
 
   .active{
-    background-image: url(src/images/1.png) !important;
+    background-image: url(src/images/8.png) !important;
 
   }
   .bomb {
