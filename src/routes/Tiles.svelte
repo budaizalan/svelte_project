@@ -5,42 +5,43 @@
   let rightClicked = $state(false);
   let displayableImage = $state("hidden");
   let changable = true;
-
-  // @ts-ignore
+  let geci = props.bombaround;
+  let flagged = $state(false);
   function onClickEvent() {
+    if(props.isbomb == "bomb"){
+      displayableImage = "mine";
+    } else if (changable) {
+      clicked = true;
+      displayableImage = props.bombaround
+    }
     if (changable) {
       clicked = true;
-      displayableImage = props.adjective;
+      displayableImage = props.bombaround
     }
   }
 
-  function onRightClickEvenet() {
-    if (changable) {
-      rightClicked = true;
-      if (displayableImage != "flag") displayableImage = "flag";
-      else displayableImage = "hidden";
+  function onRightClickEvent() {
       changable = !changable;
-    }
+      flagged = !flagged;
   }
 
   onMount(() => {
-    // document.createElement(...);
     document.addEventListener(
       "contextmenu",
       (e) => e?.cancelable && e.preventDefault()
     );
   });
 </script>
-
-<!-- svelte-ignore a11y_consider_explicit_label -->
-<!-- svelte-ignore event_directive_deprecated -->
+   <!-- svelte-ignore a11y_consider_explicit_label -->
+   <!-- svelte-ignore event_directive_deprecated -->
    <button
-   id="{props.niggo}"
+   id="{props.position}, {props.bombaround}"
    style="background-image: url(src/images/{displayableImage}.png);"
-   class="{props.isbomb == true ? "bomb": "tile"}"
-   class:active={clicked == true}
+   class="{props.isbomb}"
+   class:flag={flagged == true}
+   class:active={clicked == false}
    on:click={() => onClickEvent()}
-   on:contextmenu={() => onRightClickEvenet()}
+   on:contextmenu={() => onRightClickEvent()}
    ></button>
 
 <style>
@@ -51,7 +52,15 @@
     background-size: contain;
   }
 
+  .active{
+    background-image: url(src/images/hidden.png) !important;
+  }
+
+  .flag{
+    background-image: url(src/images/flag.png) !important;
+  }
+
   .bomb {
-    background-image: url(src/images/8.png) !important;
+    background-image: url(src/images/mine.webp) !important;
   }
 </style>
