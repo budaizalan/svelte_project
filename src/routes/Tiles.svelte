@@ -1,25 +1,17 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  let {tile, position, isbomb, bombaround, handleTile} = $props(); 
-  let clicked = $state(tile.isRevealed);
-  let displayableImage = $state("hidden");
-  let changable = true;
+  let {tile, handleTile, helper} = $props(); 
+  let clicked = $state(tile.isRevealed); 
   let flagged = $state(false);
+  console.log(clicked);
+  console.log(tile.isRevealed);
+  
   function onClickEvent() {
-    if (!flagged) {
-      if (isbomb == "bomb") {
-        displayableImage = "mine";
-      }
-      // } else if (changable) {
-      //   tile.setIsRevealed = true;
-      //   displayableImage = bombaround;
-      // }
-      if (changable) {
-        clicked = true;
-        displayableImage = bombaround;
-      }
-    } 
+    tile.isRevealed = true;
     handleTile(tile);
+    helper();
+    console.log(tile);
+    
   }
 
   function onRightClickEvent() {
@@ -34,7 +26,8 @@
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
 <!-- svelte-ignore event_directive_deprecated -->
-<button id="{position}, {bombaround}" style="background-image: url(src/images/{displayableImage}.png);" class={isbomb} class:flag={flagged == true} class:active={clicked == false} on:click={() => onClickEvent()} on:contextmenu={() => onRightClickEvent()}></button>
+<!-- <button id="{tile.position}, {tile.bombaround}" style="background-image: url(src/images/{displayableImage}.png);" class={tile.isbomb} class:flag={flagged == true} class:active={clicked == false} on:click={() => onClickEvent()} on:contextmenu={() => onRightClickEvent()}></button> -->
+ <button style="background-image: url(src/images/{tile.nearbyBombs}.png);" class:unclicked={tile.isRevealed} class:bomb={tile.isBomb} on:click={onClickEvent} on:contextmenu={onRightClickEvent}></button>
 <style>
   button {
     /* background-image: url(src/images/hidden.png); */
@@ -43,7 +36,7 @@
     background-size: contain;
   }
 
-  .active {
+  .unclicked {
     background-image: url(src/images/hidden.png) !important;
   }
 
